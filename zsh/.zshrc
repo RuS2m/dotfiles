@@ -118,6 +118,5 @@ source "$HOME/.cargo/env"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-export HOMEBREW_GITHUB_API_TOKEN=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
 export PATH="/usr/local/opt/postgresql@13/bin:$PATH"
 export PATH="/usr/local/opt/postgresql@16/bin:$PATH"
