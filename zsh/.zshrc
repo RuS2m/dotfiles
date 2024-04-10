@@ -97,11 +97,11 @@ source "$HOME/.cargo/env"
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -114,6 +114,30 @@ source "$HOME/.cargo/env"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Amazon stuff
+alias bb=brazil-build
+alias newcr="cr --description ~/preferences/datafabric-cr-template.md --reviewers team:'DataFabric-DARA':1"
+#if you wish to use IMDS set AWS_EC2_METADATA_DISABLED=false
+
+export AWS_EC2_METADATA_DISABLED=true
+
+# Do a command in all packages.
+# - Works with aliases, i.e. you can keep typing bb.
+# - Prints the name of the package before giving output (no guessing).
+# - Doesn't change your PWD.
+bra() {
+    local frame
+    frame=$(printf '#%.0s' $(seq 1 30))
+    for dir in $(brazil-recursive-cmd -all pwd -P 2>/dev/null)
+    do
+        (
+            printf '\n%s %s %s\n' "$frame" "$(basename "$dir")" "$frame"
+            cd "$dir" && eval "$@" || return 1
+        ) || return 1
+    done
+    echo
+}
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
