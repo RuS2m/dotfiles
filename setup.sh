@@ -58,12 +58,16 @@ function install_neovim() {
         # Install packer
         git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+	# Symlink neovim config
+	./nvim/install.sh
+        # Install packer dependencies
+        nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    else
+        # Symlink neovim config
+        ./nvim/install.sh
         # Install packer dependencies
         nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
     fi
-
-    # Symlink novim config
-    ./nvim/install.sh
 }
 
 function main() {
@@ -84,18 +88,10 @@ function main() {
     fi
     echo "🍫 tmux setup..."
     install_tmux "$machine"
-    echo "🇳 neovim setup..."
+    echo "✌️  neovim setup..."
     install_neovim "$machine"
 
     echo "${GREEN}Setup finished!${NC}"
 }
 
-if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
-    if [[ "debug" = $1 ]]; then
-        DEBUG=1
-    else
-        DEBUG=0
-    fi
-
-    main "$@"
-fi
+main
