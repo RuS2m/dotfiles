@@ -1,5 +1,9 @@
 #!/bin/zsh
 
+if [ ! -d $HOME/.config/ ]; then
+    mkdir "$HOME/.config"
+fi
+
 if [ ! -d $HOME/.config/nvim/ ]; then
 	mkdir "$HOME/.config/nvim"
 fi

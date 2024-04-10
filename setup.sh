@@ -53,7 +53,28 @@ function install_neovim() {
         if [ "$1" = "Mac" ]; then
             brew install neovim
         elif [ "$1" = "Linux" ]; then
-            sudo apt-get install neovim
+            apt_get_version="$(apt-get --version)"
+            # _Sometimes_ apt is prohibited to use on work, rely on yum in that cases
+            yum_version="$(yum version)"
+            if [[ $apt_get_version = apt* ]]; then
+                echo "\t\tTrying out apt-get..."
+                sudo apt-get install neovim
+            elif [[ $yum_version = Loaded* ]]; then
+                echo "\t\tTrying out yum..."
+                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+                yum install -y neovim python3-neovim
+            fi
+
+            # Checking if the nvim was successfully installed (_sometimes_ certain security restrictions doesn't allow installint it)
+            nvim_version="$(nvim --version)"
+            if [[ $nvim_version != NVIM* ]]; then
+                echo "\t\t${RED}PUT YOUR SEATBELT ON! ${NC}Downloading pre-built archive..."
+                # Last resort: downloading neovim from pre-built archive
+                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+                sudo rm -rf /opt/nvim
+                sudo tar -C /opt -xzf nvim-linux64.tar.gz
+                export PATH="$PATH:/opt/nvim-linux64/bin"
+            fi
         fi
         # Install packer
         git clone --depth 1 https://github.com/wbthomason/packer.nvim\

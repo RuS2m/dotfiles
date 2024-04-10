@@ -142,8 +142,8 @@ bra() {
     echo
 }
 
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-export PATH="/usr/local/opt/postgresql@13/bin:$PATH"
-export PATH="/usr/local/opt/postgresql@16/bin:$PATH"
