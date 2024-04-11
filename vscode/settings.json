@@ -1,0 +1,99 @@
+{
+    "workbench.colorTheme": "Gruvbox Dark (Medium)",
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "telemetry.telemetryLevel": "off",
+    "viceroy.config.lastVersion": "0.52.201563",
+    "files.watcherExclude": {
+        "**/build/**": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/.hg/store/**": true
+    },
+    "files.exclude": {
+        ".viceroy": true,
+        "apollo-overrides": true,
+        "release-info": true,
+        "src/*/build": false,
+        "build": false,
+        "env": true,
+        "packageInfo*": true,
+        ".bemol": true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "search.exclude": {
+        "env": true,
+        "src/*/build": true,
+        "build": true,
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/*.code-search": true
+    },
+    "[brazilPackageConfig]": {
+        "workbench.editor.languageDetection": false
+    },
+    "viceroy.config.internal.lastUpdateTime": "2024-02-05T22:42:12.749Z",
+    "viceroy.marketplace.extensionUpdateChannels": {
+        "marklel.vscode-brazil": "stable",
+        "amzn.AWSGuruQLinter": "stable"
+    },
+    "files.autoSave": "afterDelay",
+    "html.format.preserveNewLines": false,
+    "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+    "typescript.format.enable": false,
+    "html.format.enable": false,
+    "java.format.enabled": false,
+    "json.format.enable": false,
+    "javascript.format.enable": false,
+    "javascript.suggest.autoImports": false,
+    "typescript.suggest.autoImports": false,
+    "typescript.suggest.includeCompletionsForImportStatements": false,
+    "workbench.editorAssociations": {
+        "*.html": "default"
+    },
+    "viceroy.workspaceSyncStrategy": "automatic",
+    "aws.suppressPrompts": {
+        "codeWhispererNewWelcomeMessage": true
+    },
+    "viceroy.config.setUpCodeWhisperer": false,
+    "viceroy.doc.welcome.showAtStartup": false,
+    "update.mode": "none",
+    "update.showReleaseNotes": false,
+    "extensions.autoCheckUpdates": false,
+    "extensions.autoUpdate": false,
+    "viceroy.config.internal.autoUpdate": "off",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "java.sources.organizeImports.staticStarThreshold": 10000000,
+    "java.sources.organizeImports.starThreshold": 10000000,
+    "workbench.colorCustomizations": {
+        "terminal.background":"#252525",
+        "terminal.foreground":"#ecdbb2",
+        "textLink.foreground": "#cb231c",
+        "terminal.ansiBlack":"#353535",
+        "terminal.ansiBrightBlack":"#a39586",
+        "terminal.ansiRed":"#d73925",
+        "terminal.ansiBrightRed":"#fe6142",
+        "terminal.ansiGreen":"#a8a521",
+        "terminal.ansiBrightGreen":"#c4c431",
+        "terminal.ansiYellow":"#dfa82a",
+        "terminal.ansiBrightYellow":"#fcc73c",
+        "terminal.ansiBlue": "#549699",
+        "terminal.ansiBrightBlue":"#94b3a8",
+        "terminal.ansiMagenta":"#bf7897",
+        "terminal.ansiBrightMagenta":"#dc9aab",
+        "terminal.ansiCyan":"#79aa7d",
+        "terminal.ansiBrightCyan":"#9dd08e",
+        "terminal.ansiWhite":"#b7a996",
+        "terminal.ansiBrightWhite":"#efe1bf"
+    },
+    "terminal.integrated.fontFamily": "'Meslo LG S DZ for Powerline'",
+    "editor.fontFamily": "'Meslo LG S DZ for Powerline'"
+}
