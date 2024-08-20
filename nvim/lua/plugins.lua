@@ -40,20 +40,17 @@ packer.init({
 
 -- Install your plugins here
 return packer.startup(function(use)
-	use ("wbthomason/packer.nvim") -- Have packer manage itself	
+    use("wbthomason/packer.nvim") -- Have packer manage itself	
 
     use('ellisonleao/gruvbox.nvim') -- epic color scheme
 
     -- Basic LSP tooling
-    use('williamboman/mason.nvim')
-    use('williamboman/mason-lspconfig.nvim')
-    use('neovim/nvim-lspconfig')
+    use('neovim/nvim-lspconfig') -- Configurations for Nvim LSP
 
     -- Completion framework:
     use('hrsh7th/nvim-cmp')
-
-    -- LSP completion source:
     use('hrsh7th/cmp-nvim-lsp')
+
 
     -- Useful completion sources:
     use('hrsh7th/cmp-nvim-lua')
@@ -63,14 +60,20 @@ return packer.startup(function(use)
     use('hrsh7th/cmp-buffer')
     use('hrsh7th/vim-vsnip')
 
-    -- Language specifics
+    -- Fuzzy Finder (Telescope)
+    use {
+        'nvim-telescope/telescope.nvim', 
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    
+    -- Treesitter for better syntax highlighting and code navigation
+    use {
+	'nvim-treesitter/nvim-treesitter',
+	run = ':TSUpdate'
+    }
 
-    -- 🦀 Rust
-
-    use('simrat39/rust-tools.nvim') -- Rust code analyzer
-
-
-	if PACKER_BOOTSTRAP then
-		require("packer").sync()
-	end
+    if PACKER_BOOTSTRAP then
+	require("packer").sync()
+    end
 end)

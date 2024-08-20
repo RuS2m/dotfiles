@@ -26,6 +26,21 @@ function install_oh_my_zsh() {
 	./zsh/install.sh
 }
 
+function install_ripgrep() {
+    if command -v brew &> /dev/null; then
+        echo "Installing ripgrep using Homebrew..."
+        brew install ripgrep
+    elif command -v apt &> /dev/null; then
+        echo "Installing ripgrep using apt..."
+        sudo apt-get update && sudo apt-get install -y ripgrep
+    elif command -v pacman &> /dev/null; then
+        echo "Installing ripgrep using pacman..."
+        sudo pacman -S ripgrep
+    else
+        echo "Please install ripgrep manually. Visit https://github.com/BurntSushi/ripgrep#installation for instructions."
+    fi
+}
+
 function install_brew() {
     brew_version="$(brew -v)"
     if [[ $brew_version != Homebrew* ]]; then
@@ -109,6 +124,8 @@ function main() {
     fi
     echo "🍫 tmux setup..."
     install_tmux "$machine"
+    echo "🪦 ripgrep setup..."
+    install_ripgrep
     echo "✌️  neovim setup..."
     install_neovim "$machine"
 
