@@ -12,6 +12,8 @@ cmp.setup({
         ['<S-j>'] = cmp.mapping.scroll_docs(4),
         ['<S-Space>'] = cmp.mapping.complete(),
         ['<S-e>'] = cmp.mapping.abort(),
+        ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
