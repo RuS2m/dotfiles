@@ -61,6 +61,26 @@ function install_tmux() {
     #TODO: tmux configuration
 }
 
+function install_clangd() {
+    clangd_version="$(clangd --version)"
+    if [[ $clangd_version != Apple* ]]; then
+        echo "\tInstalling..."
+        if [ "$1" = "Mac" ]; then
+            brew install llvm
+            brew link --force llvm
+            brew install lld
+        elif [ "$1" = "Linux" ]; then
+            sudo apt update
+            sudo apt install clangd
+        fi
+    fi
+    if [ ! -d $HOME/.clang-format ]; then
+        touch "$HOME/.clang-format";
+        ln -sf "$HOME"/dotfiles/clangd/.clang-format "$HOME"/.clang-format
+        echo "Linked .clang-format"
+    fi
+}
+
 function install_neovim() {
     nvim_version="$(nvim --version)"
     if [[ $nvim_version != NVIM* ]]; then
@@ -124,6 +144,8 @@ function main() {
     fi
     echo "🍫 tmux setup..."
     install_tmux "$machine"
+    echo "🎵 clangd setup..."
+    install_clangd
     echo "🪦 ripgrep setup..."
     install_ripgrep
     echo "✌️  neovim setup..."

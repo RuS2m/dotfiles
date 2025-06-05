@@ -97,14 +97,17 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
+
+### EDITOR CONFIGS START ###
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
 else
   export EDITOR='nvim'
 fi
 
-alias vim=nvim
+export PATH="$PATH:/opt/nvim-linux64/bin"
+### END EDITOR CONFIGS ###
+
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -118,11 +121,10 @@ alias vim=nvim
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Amazon stuff
+
+### AMAZON CONFIGS START ###
 alias bb=brazil-build
 alias newcr="cr --description ~/preferences/datafabric-cr-template.md --reviewers team:'DataFabric-DARA':1"
-#if you wish to use IMDS set AWS_EC2_METADATA_DISABLED=false
-
 export AWS_EC2_METADATA_DISABLED=true
 
 # Do a command in all packages.
@@ -141,8 +143,18 @@ bra() {
     done
     echo
 }
+### END AMAZON CONFIGS ###
 
-export PATH="$PATH:/opt/nvim-linux64/bin"
+
+### C++ CONFIGS START ###
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+# To use the bundled libunwind please use the following LDFLAGS:
+#LDFLAGS="-L/usr/local/opt/llvm/lib/unwind -lunwind"
+#To use the bundled libc++ please use the following LDFLAGS:
+LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -L/usr/local/opt/llvm/lib/unwind -lunwind"
+### END C++ CONFIGS ###
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
