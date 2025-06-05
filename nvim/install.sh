@@ -26,7 +26,7 @@ if [ ! -d $HOME/.config/nvim/after/plugin ]; then
     mkdir -p "$HOME/.config/nvim/after/plugin"
 fi
 
-declare -a PLUGIN_FILES=("gruvbox", "lspconfig" "telescope" "treesitter", "cmp")
+declare -a PLUGIN_FILES=("gruvbox" "lspconfig" "telescope" "treesitter" "cmp")
 
 for plugin_file in "${PLUGIN_FILES[@]}"; do
     ln -sf "$HOME/dotfiles/nvim/after/plugin/${plugin_file}.lua" "$HOME/.config/nvim/after/plugin/${plugin_file}.lua"

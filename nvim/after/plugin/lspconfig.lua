@@ -3,6 +3,17 @@ local nvim_lsp = require('lspconfig')
 
 nvim_lsp.rust_analyzer.setup({
   on_attach = function(client, bufnr)
+    -- enable logging
+    --[[
+    client.config.flags = {
+        allow_incremental_sync = true,
+        debounce_text_changes = 150,
+    }
+    client.config.cmd_env = {
+        RUST_LOG = "debug",
+        RUST_BACKTRACE = "full",
+    }
+    --]]
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', { noremap=true, silent=true })
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', { noremap=true, silent=true })
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap=true, silent=true })
@@ -18,14 +29,18 @@ nvim_lsp.rust_analyzer.setup({
             importPrefix = "by_self",
           },
           diagnostics = {
-            disabled = { "unresolved-import" }
+            enable = true,
+            disable = { "unresolved-import" },
           },           
           procMacro = {
-              enable = true
+              enable = true,
           },
           checkOnSave = {
-              command = "clippy"
+              command = "clippy",
           },
+          cargo = {
+              loadOutDirsFromCheck = true,
+          }
     },
   },
 })

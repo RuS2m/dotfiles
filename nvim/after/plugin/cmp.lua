@@ -8,8 +8,8 @@ cmp.setup({
         end,
     },
     mapping = cmp.mapping.preset.insert({
-        ['<S-Up>'] = cmp.mapping.scroll_docs(-4),
-        ['<S-Down>'] = cmp.mapping.scroll_docs(4),
+        ['<S-k>'] = cmp.mapping.scroll_docs(-4),
+        ['<S-j>'] = cmp.mapping.scroll_docs(4),
         ['<S-Space>'] = cmp.mapping.complete(),
         ['<S-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
