@@ -26,6 +26,17 @@ function install_oh_my_zsh() {
 	./zsh/install.sh
 }
 
+function install_rustup() {
+    rustup_version="$(rustup -v)"
+    if [[ $rustup_version != rustup* ]]; then
+        echo "\tInstalling..."
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        . "$HOME/.cargo/env"
+        rustup toolchain install stable
+        rustup component add rust-analyzer
+    fi
+}
+
 function install_ripgrep() {
     if command -v brew &> /dev/null; then
         echo "Installing ripgrep using Homebrew..."
@@ -148,6 +159,8 @@ function main() {
     install_clangd
     echo "🪦 ripgrep setup..."
     install_ripgrep
+    echo "🦀 rust setup..."
+    install_rustup
     echo "✌️  neovim setup..."
     install_neovim "$machine"
 

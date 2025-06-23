@@ -11,6 +11,8 @@ vim.opt.expandtab = true
 vim.opt.number = true -- show numbers
 vim.opt.relativenumber = true
 
+vim.opt.guicursor = "n-v-c-i:block" -- make cursor a block in both modes
+
 vim.opt.colorcolumn = "156" -- prevent myself from typing too long lines of code or text
 vim.cmd([[highlight ColorColumn ctermbg=darkgray]])
 
