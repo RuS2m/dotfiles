@@ -3,6 +3,7 @@
 -- tab labels settings (show tab numbers and file extension based emojis)
 vim.opt.showtabline = 2 -- always show tabs in gvim
 
+-- TODO: figure out how to scroll efficiently when there are over 20 tabs
 function custom_tab_line()
     local tabline = ''
 

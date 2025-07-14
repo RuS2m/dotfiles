@@ -1,14 +1,13 @@
-plugins=(
-  git
-  bundler
-  dotenv
-  osx
-  rake
-  rbenv
-  ruby
-  autojump
-  emoji
-)
+#plugins=(
+#  bundler
+#  dotenv
+#  osx
+#  rake
+#  rbenv
+#  ruby
+#  autojump
+#  emoji
+#)
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -82,7 +81,10 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+
+# git plugin is extremely unoptimized for larger code bases and should be deleted (from the internet)
+plugins=()
+# plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
