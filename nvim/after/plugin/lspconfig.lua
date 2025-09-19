@@ -1,4 +1,4 @@
--- lsp server ported from rust-analyzer
+-- lsp server settings
 local nvim_lsp = require('lspconfig')
 
 -- unified lsp mappings
@@ -18,15 +18,27 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  --vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.keymap.set("n", "K", function()
+    vim.lsp.buf.hover()
+    -- hover is async; wait a tick then focus the newest float
+    vim.defer_fn(function()
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local cfg = vim.api.nvim_win_get_config(win)
+        if cfg and cfg.relative ~= "" then
+          pcall(vim.api.nvim_set_current_win, win)
+          break
+        end
+      end
+    end, 60)
+  end, { buffer = bufnr, silent = true, desc = "LSP hover (focus float)" })
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'wf', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
   vim.api.nvim_command('autocmd CursorHold <buffer> lua vim.diagnostic.open_float(nil, { focusable = false })')
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-y>', '<cmd>lua vim.diagnostic.open_float(nil, { focusable = false })<CR>', opts)
 end
 
-nvim_lsp.rust_analyzer.setup({
+vim.lsp.config('rust_analyzer', {
   on_attach = on_attach,
-  root_dir = require('lspconfig.util').root_pattern("Cargo.toml"),
   settings = {
       ["rust-analyzer"] = {
           assist = {
@@ -44,13 +56,14 @@ nvim_lsp.rust_analyzer.setup({
               command = "clippy",
           },
           cargo = {
-              loadOutDirsFromCheck = true,
+              features = "all",
           }
     },
   },
 })
 
-nvim_lsp.clangd.setup({
+vim.lsp.enable('rust_analyzer')
+vim.lsp.config('clangd', {
   on_attach = on_attach,
   cmd = {
     "clangd",
@@ -66,3 +79,4 @@ nvim_lsp.clangd.setup({
     "--completion-style=detailed",
   },
 })
+vim.lsp.enable('clangd')
