@@ -60,18 +60,6 @@ function install_brew() {
     fi
 }
 
-function install_tmux() {
-    if [ ! -d $TMUX ]; then
-        echo "\tInstalling..."
-        if [ "$1" = "Mac" ]; then
-            brew install tmux
-        elif [ "$1" = "Linux" ]; then
-            sudo apt install tmux
-        fi
-    fi
-    #TODO: tmux configuration
-}
-
 function install_clangd() {
     clangd_version="$(clangd --version)"
     if [[ $clangd_version != Apple* ]]; then
@@ -89,6 +77,23 @@ function install_clangd() {
         touch "$HOME/.clang-format";
         ln -sf "$HOME"/dotfiles/clangd/.clang-format "$HOME"/.clang-format
         echo "Linked .clang-format"
+    fi
+}
+
+function install_tmux() {
+    tmux_version="$(tmux -V)"
+    if [[ $tmux_version != tmux* ]]; then
+        echo "\tInstalling..."
+        if [ "$1" = "Mac" ]; then
+            brew install tmux
+        elif [ "$1" = "Linux" ]; then
+            sudo apt install tmux
+        fi
+    fi
+    if [ ! -d $HOME/.tmux.conf ]; then
+        touch "$HOME/.tmux.conf";
+        ln -sf "$HOME"/dotfiles/tmux/.tmux.conf "$HOME"/.tmux.conf
+        echo "Linked .tmux.conf"
     fi
 }
 
