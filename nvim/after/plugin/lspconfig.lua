@@ -57,7 +57,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'wf', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
   vim.api.nvim_command('autocmd CursorHold <buffer> lua vim.diagnostic.open_float(nil, { focusable = false })')
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-y>', '<cmd>lua vim.diagnostic.open_float(nil, { focusable = false })<CR>', opts)
-  vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdSwitchSourceHeader', function()
+  vim.api.nvim_buf_create_user_command(bufnr, 'SwitchSH', function()
       switch_source_header(bufnr, client)
     end, { desc = 'Switch between source/header' })
 end

@@ -18,4 +18,5 @@ telescope.load_extension('fzf')
 
 vim.api.nvim_set_keymap('n', 'ff', ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'fg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ';;', ':Telescope lsp_document_symbols<CR>', { noremap = true, silent = true })
 
