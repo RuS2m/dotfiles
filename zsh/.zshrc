@@ -108,16 +108,6 @@ else
 fi
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
-
-if [[ $TERM_PROGRAM != vscode ]]; then
-    TMUX_OPTIONS="-CC"
-else
-    TMUX_OPTIONS=""
-fi
-
-if [[ ! $TMUX && -t 0 ]]; then
-    tmux -u $TMUX_OPTIONS new-session -As auto
-fi
 ### END EDITOR CONFIGS ###
 
 
