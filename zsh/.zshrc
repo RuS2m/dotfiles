@@ -108,6 +108,16 @@ else
 fi
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
+
+if [[ $TERM_PROGRAM != vscode ]]; then
+    TMUX_OPTIONS="-CC"
+else
+    TMUX_OPTIONS=""
+fi
+
+if [[ ! $TMUX && -t 0 ]]; then
+    tmux -u $TMUX_OPTIONS new-session -As auto
+fi
 ### END EDITOR CONFIGS ###
 
 
@@ -124,29 +134,10 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-### AMAZON CONFIGS START ###
-alias bb=brazil-build
-alias newcr="cr --description ~/preferences/datafabric-cr-template.md --reviewers team:'DataFabric-DARA':1"
-export AWS_EC2_METADATA_DISABLED=true
-
-# Do a command in all packages.
-# - Works with aliases, i.e. you can keep typing bb.
-# - Prints the name of the package before giving output (no guessing).
-# - Doesn't change your PWD.
-bra() {
-    local frame
-    frame=$(printf '#%.0s' $(seq 1 30))
-    for dir in $(brazil-recursive-cmd -all pwd -P 2>/dev/null)
-    do
-        (
-            printf '\n%s %s %s\n' "$frame" "$(basename "$dir")" "$frame"
-            cd "$dir" && eval "$@" || return 1
-        ) || return 1
-    done
-    echo
-}
-### END AMAZON CONFIGS ###
-
+### MONGO CONFIGS START ###
+# config of dev container
+export PATH="$HOME/.devcontainers/bin:$PATH"
+### END MONGO CONFIGS ###
 
 ### C++ CONFIGS START ###
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
