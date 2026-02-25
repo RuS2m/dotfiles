@@ -66,11 +66,21 @@ return packer.startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
+    -- Modified tab functionality (icons + keep tab centered)
+    use {
+        'nvim-mini/mini.icons',
+        branch = 'stable'
+    }
+    use {
+        'nvim-mini/mini.tabline',
+        branch = 'stable'
+    }
     
     -- Treesitter for better syntax highlighting and code navigation
     use {
-	'nvim-treesitter/nvim-treesitter',
-	run = ':TSUpdate'
+	    'nvim-treesitter/nvim-treesitter',
+	    run = ':TSUpdate'
     }
 
     -- Remote-nvim setup: Allows connecting to SSH or Docker/dev-containers syncing the neovim config
