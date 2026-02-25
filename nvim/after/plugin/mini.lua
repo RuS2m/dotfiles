@@ -13,7 +13,7 @@ require('mini.tabline').setup({
       end
 
       local suffix = vim.bo[buffer_id].modified and '+ ' or '' -- + if the buffer was modified
-      return name .. MiniTabline.default_format(buffer_id, label) .. suffix
+      return MiniTabline.default_format(buffer_id, name) .. suffix
     end,
     tabpage_section = 'left',
 })
