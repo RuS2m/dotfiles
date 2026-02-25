@@ -30,10 +30,13 @@ vim.api.nvim_set_keymap(
     { noremap = true }
 )
 
-vim.api.nvim_set_keymap(
-    "n",
-    "tw",
-    ":tabclose<cr>",
-    { noremap = true }
-)
+-- Note: due to the mini-tabs behavior with introduction of persisting tabs, buffers need to be forcefully cleaned up
+vim.keymap.set('n', 'tw', function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  pcall(vim.cmd, 'tabclose')
+  -- delete the buffer 
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
+  end
+end, { desc = 'Close tab and delete buffer' })
 

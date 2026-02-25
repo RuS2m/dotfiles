@@ -3,6 +3,8 @@ require('mini.icons').setup({ style = 'glyph' })
 require('mini.tabline').setup({
     show_icons = true,
     format = function(buffer_id, label)
+      -- don't show unlisted buffers
+      if not vim.bo[buffer_id].buflisted then return '' end
       -- including path abbreveation in the tab name
       local name = vim.api.nvim_buf_get_name(buffer_id)
       if name == '' then -- handling empty tab edge case

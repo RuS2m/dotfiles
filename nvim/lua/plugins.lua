@@ -80,7 +80,9 @@ return packer.startup(function(use)
     -- Treesitter for better syntax highlighting and code navigation
     use {
 	    'nvim-treesitter/nvim-treesitter',
-	    run = ':TSUpdate'
+        branch = "main",
+        lazy = false,
+	    build = ':TSUpdate'
     }
 
     -- Remote-nvim setup: Allows connecting to SSH or Docker/dev-containers syncing the neovim config
