@@ -4,6 +4,9 @@ vim.opt.exrc = true -- automatically execute .nvim.lua, .nvimrc and .exrc files 
 vim.opt.encoding = "utf-8" -- required by autocomplete
 vim.opt.mouse = "a" -- allow mouse movements
 
+vim.opt.spell = true -- turn on spelling
+vim.opt.spelllang = "en" -- customize the spelling language
+
 vim.opt.tabstop = 4 -- interpret tabs as 4 spaces
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
@@ -19,3 +22,4 @@ vim.cmd([[highlight ColorColumn ctermbg=darkgray]])
 -- override gruvbox default settings for floating box colorscheme (it sets it to purple)
 vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#5a524c', fg = '#ebdbb2' })
 vim.api.nvim_set_hl(0, 'FloatBorder', { bg = '#5a524c', fg = '#fbf1c7' })
+
