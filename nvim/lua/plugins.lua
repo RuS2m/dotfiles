@@ -85,8 +85,9 @@ return packer.startup(function(use)
 	    build = ':TSUpdate'
     }
 
-    -- Git diff review
+    -- Git
     use('sindrets/diffview.nvim')
+    use('lewis6991/gitsigns.nvim')
 
     -- Remote-nvim setup: Allows connecting to SSH or Docker/dev-containers syncing the neovim config
     use('nvim-lua/plenary.nvim') -- dependency for standard functions
