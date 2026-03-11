@@ -27,7 +27,7 @@ function install_oh_my_zsh() {
 }
 
 function install_rustup() {
-    rustup_version="$(rustup -v)"
+    rustup_version="$(rustup -V)"
     if [[ $rustup_version != rustup* ]]; then
         echo "\tInstalling..."
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -64,7 +64,7 @@ function install_clangd() {
     clangd_version="$(clangd --version)"
     if [[ $clangd_version != Apple* ]]; then
         echo "\tInstalling..."
-        if [ "$1" = "Mac" ]; then
+        if command -v brew &> /dev/null; then
             brew install llvm
             brew link --force llvm
             brew install lld
@@ -84,7 +84,7 @@ function install_tmux() {
     tmux_version="$(tmux -V)"
     if [[ $tmux_version != tmux* ]]; then
         echo "\tInstalling..."
-        if [ "$1" = "Mac" ]; then
+        if command -v brew &> /dev/null; then
             brew install tmux
         elif [ "$1" = "Linux" ]; then
             sudo apt install tmux
@@ -101,7 +101,7 @@ function install_neovim() {
     nvim_version="$(nvim --version)"
     if [[ $nvim_version != NVIM* ]]; then
         echo "\tInstalling..."
-        if [ "$1" = "Mac" ]; then
+        if command -v brew &> /dev/null; then
             brew install neovim
         elif [ "$1" = "Linux" ]; then
             apt_get_version="$(apt-get --version)"
@@ -154,10 +154,8 @@ function main() {
 
     echo "🫢 oh-my-zsh setup..."
     install_oh_my_zsh
-    if [[ "$machine" == "Mac" ]]; then
-        echo "🍺 HomeBrew setup..."
-        install_brew
-    fi
+    echo "🍺 HomeBrew setup..."
+    install_brew
     echo "🍫 tmux setup..."
     install_tmux "$machine"
     echo "🎵 clangd setup..."
