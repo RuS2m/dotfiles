@@ -16,10 +16,25 @@ function determine_machine() {
     echo $machine
 }
 
+# to use `has_cmd nvim`, it would check that the name resolves successfully
+function has_cmd() {
+    [ $# -gt 0 ] || return 1
+    command -v -- "$1" >/dev/null 2>&1
+}
+
+# to use `can_run nvim --version`, it would check if the command succeeds
+function can_run() {
+    "$@" >/dev/null 2>&1
+}
+
+function has_brew() {
+    has_cmd brew && can_run brew -v
+}
+
 function install_oh_my_zsh() {
-    # Install oh-my-zsh
-    export ZSH="$HOME/.oh-my-zsh"
-    if [ ! -d $ZSH ]; then
+    # TODO: replace with fish
+    # Install oh-my-zsh (cringe, to be removed immediately)
+    if ! has_cmd zsh || ! can_run zsh --version; then
         echo "\tInstalling..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
@@ -27,8 +42,7 @@ function install_oh_my_zsh() {
 }
 
 function install_rustup() {
-    rustup_version="$(rustup -V)"
-    if [[ $rustup_version != rustup* ]]; then
+    if ! has_cmd rustup || ! can_run rustup -V; then
         echo "\tInstalling..."
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
         . "$HOME/.cargo/env"
@@ -38,13 +52,13 @@ function install_rustup() {
 }
 
 function install_ripgrep() {
-    if command -v brew &> /dev/null; then
+    if has_brew; then
         echo "Installing ripgrep using Homebrew..."
         brew install ripgrep
-    elif command -v apt &> /dev/null; then
+    elif has_cmd apt; then
         echo "Installing ripgrep using apt..."
         sudo apt-get update && sudo apt-get install -y ripgrep
-    elif command -v pacman &> /dev/null; then
+    elif has_cmd pacman; then
         echo "Installing ripgrep using pacman..."
         sudo pacman -S ripgrep
     else
@@ -53,18 +67,27 @@ function install_ripgrep() {
 }
 
 function install_brew() {
-    brew_version="$(brew -v)"
-    if [[ $brew_version != Homebrew* ]]; then
+    if ! has_brew; then
         echo "\tInstalling..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
     fi
 }
 
+function install_gdb() {
+    if ! has_cmd gdbserver || ! has_cmd gdb; then
+        if has_brew; then
+            brew install gdb
+        elif [ "$1" = "Linux" ]; then
+            sudo apt-get install gdb gdbserver
+        fi
+    fi
+	./gdb/install.sh
+}
+
 function install_clangd() {
-    clangd_version="$(clangd --version)"
-    if [[ $clangd_version != Apple* ]]; then
+    if ! has_cmd clangd || ! can_run clangd --version; then
         echo "\tInstalling..."
-        if command -v brew &> /dev/null; then
+        if has_brew; then
             brew install llvm
             brew link --force llvm
             brew install lld
@@ -81,10 +104,9 @@ function install_clangd() {
 }
 
 function install_tmux() {
-    tmux_version="$(tmux -V)"
-    if [[ $tmux_version != tmux* ]]; then
+    if ! has_cmd tmux || ! can_run tmux -V; then
         echo "\tInstalling..."
-        if command -v brew &> /dev/null; then
+        if has_brew; then
             brew install tmux
         elif [ "$1" = "Linux" ]; then
             sudo apt install tmux
@@ -98,27 +120,23 @@ function install_tmux() {
 }
 
 function install_neovim() {
-    nvim_version="$(nvim --version)"
-    if [[ $nvim_version != NVIM* ]]; then
+    if ! has_cmd nvim || ! can_run nvim --version; then
         echo "\tInstalling..."
-        if command -v brew &> /dev/null; then
+        if has_brew; then
             brew install neovim
         elif [ "$1" = "Linux" ]; then
-            apt_get_version="$(apt-get --version)"
             # _Sometimes_ apt is prohibited to use on work, rely on yum in that cases
-            yum_version="$(yum version)"
-            if [[ $apt_get_version = apt* ]]; then
+            if has_cmd apt-get && can_run apt-get --version; then
                 echo "\t\tTrying out apt-get..."
                 sudo apt-get install neovim
-            elif [[ $yum_version = Loaded* ]]; then
+            elif has_cmd yum && can_run yum version; then
                 echo "\t\tTrying out yum..."
                 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
                 yum install -y neovim python3-neovim
             fi
 
-            # Checking if the nvim was successfully installed (_sometimes_ certain security restrictions doesn't allow installint it)
-            nvim_version="$(nvim --version)"
-            if [[ $nvim_version != NVIM* ]]; then
+            # Checking if the nvim was successfully installed (_sometimes_ certain security restrictions doesn't allow installing it)
+            if ! has_cmd nvim || ! can_run nvim --version; then
                 echo "\t\t${RED}PUT YOUR SEATBELT ON! ${NC}Downloading pre-built archive..."
                 # Last resort: downloading neovim from pre-built archive
                 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
@@ -160,6 +178,8 @@ function main() {
     install_tmux "$machine"
     echo "🎵 clangd setup..."
     install_clangd
+    echo "🐞🐠 gdb setup..."
+    install_gdb
     echo "🪦 ripgrep setup..."
     install_ripgrep
     echo "🦀 rust setup..."
