@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -31,14 +31,17 @@ function has_brew() {
     has_cmd brew && can_run brew -v
 }
 
-function install_oh_my_zsh() {
-    # TODO: replace with fish
-    # Install oh-my-zsh (cringe, to be removed immediately)
-    if ! has_cmd zsh || ! can_run zsh --version; then
-        echo "\tInstalling..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+function install_fish() {
+    if ! has_cmd fish || ! can_run fish -v; then
+        if has_brew; then
+            brew install fish
+        elif [ "$1" = "Linux" ]; then
+            sudo apt-add-repository ppa:fish-shell/release-4
+            sudo apt update
+            sudo apt install fish
+        fi
     fi
-	./zsh/install.sh
+    ./fish/install.sh
 }
 
 function install_rustup() {
@@ -170,8 +173,6 @@ function main() {
     echo "Setting up your ${machine}..."
 
 
-    echo "🫢 oh-my-zsh setup..."
-    install_oh_my_zsh
     echo "🍺 HomeBrew setup..."
     install_brew
     echo "🍫 tmux setup..."
@@ -186,6 +187,8 @@ function main() {
     install_rustup
     echo "✌️  neovim setup..."
     install_neovim "$machine"
+    echo "🐟 fish setup..."
+    install_fish "$machine"
 
     echo "${GREEN}Setup finished!${NC}"
 }

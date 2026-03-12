@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 CUSTOM_GDB_DIR="$HOME/gdb/libcxx"
 mkdir -p "$CUSTOM_GDB_DIR"

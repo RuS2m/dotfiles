@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 if [ ! -d $HOME/.config/ ]; then
     mkdir "$HOME/.config"
