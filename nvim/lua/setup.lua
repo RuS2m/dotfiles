@@ -14,6 +14,16 @@ vim.opt.expandtab = true
 vim.opt.number = true -- show numbers
 vim.opt.relativenumber = true
 
+-- cmd line autocomplete
+vim.opt.wildmode = "noselect:lastused,full"
+vim.opt.wildoptions = "pum,fuzzy"
+vim.api.nvim_create_autocmd("CmdlineChanged", {
+  pattern = ":",
+  callback = function()
+    vim.fn.wildtrigger()
+  end,
+})
+
 vim.opt.guicursor = "n-v-c-i:block" -- make cursor a block in both modes
 
 vim.opt.colorcolumn = "156" -- prevent myself from typing too long lines of code or text
